@@ -1,0 +1,423 @@
+<?xml version="1.0"?>
+<PMML version="4.3" xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd">
+ <Header copyright="Copyright (c) 2017 josepplloo" description="RPart Decision Tree Model">
+  <Extension name="user" value="josepplloo" extender="Rattle/PMML"/>
+  <Application name="Rattle/PMML" version="1.4"/>
+  <Timestamp>2017-03-28 09:02:43</Timestamp>
+ </Header>
+ <DataDictionary numberOfFields="9">
+  <DataField name="SexoDesc" optype="categorical" dataType="string">
+   <Value value="0"/>
+   <Value value="1"/>
+  </DataField>
+  <DataField name="Codigo" optype="categorical" dataType="string">
+   <Value value="41"/>
+   <Value value="42"/>
+   <Value value="37"/>
+   <Value value="43"/>
+   <Value value="3"/>
+   <Value value="39"/>
+   <Value value="28"/>
+   <Value value="21"/>
+   <Value value="31"/>
+   <Value value="25"/>
+   <Value value="24"/>
+   <Value value="27"/>
+   <Value value="15"/>
+   <Value value="34"/>
+   <Value value="40"/>
+   <Value value="26"/>
+   <Value value="1"/>
+   <Value value="12"/>
+   <Value value="6"/>
+   <Value value="11"/>
+   <Value value="33"/>
+   <Value value="19"/>
+  </DataField>
+  <DataField name="RegimenAdministradoraDesc" optype="categorical" dataType="string">
+   <Value value="0"/>
+   <Value value="3"/>
+   <Value value="2"/>
+  </DataField>
+  <DataField name="DxPrincipal" optype="categorical" dataType="string">
+   <Value value="0"/>
+   <Value value="608"/>
+   <Value value="1745"/>
+   <Value value="696"/>
+   <Value value="817"/>
+   <Value value="620"/>
+   <Value value="634"/>
+   <Value value="1419"/>
+   <Value value="438"/>
+   <Value value="737"/>
+   <Value value="526"/>
+   <Value value="706"/>
+   <Value value="740"/>
+   <Value value="705"/>
+   <Value value="557"/>
+   <Value value="1870"/>
+   <Value value="1417"/>
+   <Value value="703"/>
+   <Value value="674"/>
+   <Value value="1717"/>
+   <Value value="761"/>
+   <Value value="1491"/>
+   <Value value="1002"/>
+   <Value value="1591"/>
+   <Value value="677"/>
+   <Value value="1465"/>
+   <Value value="691"/>
+   <Value value="816"/>
+   <Value value="744"/>
+   <Value value="882"/>
+   <Value value="679"/>
+   <Value value="625"/>
+   <Value value="120"/>
+   <Value value="1729"/>
+   <Value value="1436"/>
+   <Value value="600"/>
+   <Value value="734"/>
+  </DataField>
+  <DataField name="FinalidadProcedimientosCD" optype="categorical" dataType="string">
+   <Value value="2"/>
+   <Value value="1"/>
+   <Value value="3"/>
+   <Value value="4"/>
+  </DataField>
+  <DataField name="TipoUsuarioCD" optype="categorical" dataType="string">
+   <Value value="2"/>
+   <Value value="3"/>
+   <Value value="1"/>
+   <Value value="5"/>
+   <Value value="8"/>
+  </DataField>
+  <DataField name="AmbitosProcedimientoCD" optype="categorical" dataType="string">
+   <Value value="0"/>
+   <Value value="1"/>
+   <Value value="2"/>
+  </DataField>
+  <DataField name="CostoProcedimiento" optype="continuous" dataType="double"/>
+  <DataField name="Edad" optype="continuous" dataType="double"/>
+ </DataDictionary>
+ <TreeModel modelName="RPart_Model" functionName="classification" algorithmName="rpart" splitCharacteristic="binarySplit" missingValueStrategy="defaultChild" noTrueChildStrategy="returnLastPrediction">
+  <MiningSchema>
+   <MiningField name="SexoDesc" usageType="predicted"/>
+   <MiningField name="Codigo" usageType="active"/>
+   <MiningField name="RegimenAdministradoraDesc" usageType="active"/>
+   <MiningField name="DxPrincipal" usageType="active"/>
+   <MiningField name="FinalidadProcedimientosCD" usageType="active"/>
+   <MiningField name="TipoUsuarioCD" usageType="active"/>
+   <MiningField name="AmbitosProcedimientoCD" usageType="active"/>
+   <MiningField name="CostoProcedimiento" usageType="active"/>
+   <MiningField name="Edad" usageType="active"/>
+  </MiningSchema>
+  <Output>
+   <OutputField name="Predicted_SexoDesc" optype="categorical" dataType="string" feature="predictedValue"/>
+   <OutputField name="Probability_0" optype="continuous" dataType="double" feature="probability" value="0"/>
+   <OutputField name="Probability_1" optype="continuous" dataType="double" feature="probability" value="1"/>
+  </Output>
+  <Node id="1" score="1" recordCount="710" defaultChild="2">
+   <True/>
+   <ScoreDistribution value="0" recordCount="273" confidence="0.384507042253521"/>
+   <ScoreDistribution value="1" recordCount="437" confidence="0.615492957746479"/>
+   <Node id="2" score="0" recordCount="440" defaultChild="4">
+    <CompoundPredicate booleanOperator="surrogate">
+     <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+      <Array n="16" type="string">&quot;41&quot; &quot;42&quot; &quot;37&quot; &quot;39&quot; &quot;28&quot; &quot;21&quot; &quot;25&quot; &quot;27&quot; &quot;34&quot; &quot;40&quot; &quot;26&quot; &quot;1&quot; &quot;12&quot; &quot;6&quot; &quot;33&quot; &quot;19&quot;</Array>
+     </SimpleSetPredicate>
+     <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+      <Array n="3" type="string">&quot;2&quot; &quot;5&quot; &quot;8&quot;</Array>
+     </SimpleSetPredicate>
+     <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+      <Array n="1" type="string">&quot;3&quot;</Array>
+     </SimpleSetPredicate>
+     <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="10524.5"/>
+     <SimplePredicate field="Edad" operator="lessThan" value="80.5"/>
+     <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+      <Array n="35" type="string">&quot;0&quot; &quot;1745&quot; &quot;696&quot; &quot;817&quot; &quot;620&quot; &quot;634&quot; &quot;1419&quot; &quot;438&quot; &quot;737&quot; &quot;526&quot; &quot;706&quot; &quot;740&quot; &quot;705&quot; &quot;557&quot; &quot;1870&quot; &quot;703&quot; &quot;674&quot; &quot;1717&quot; &quot;761&quot; &quot;1491&quot; &quot;1002&quot; &quot;1591&quot; &quot;677&quot; &quot;1465&quot; &quot;691&quot; &quot;816&quot; &quot;744&quot; &quot;882&quot; &quot;679&quot; &quot;625&quot; &quot;120&quot; &quot;1729&quot; &quot;1436&quot; &quot;600&quot; &quot;734&quot;</Array>
+     </SimpleSetPredicate>
+    </CompoundPredicate>
+    <ScoreDistribution value="0" recordCount="251" confidence="0.570454545454545"/>
+    <ScoreDistribution value="1" recordCount="189" confidence="0.429545454545455"/>
+    <Node id="4" score="0" recordCount="377" defaultChild="8">
+     <CompoundPredicate booleanOperator="surrogate">
+      <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+       <Array n="21" type="string">&quot;0&quot; &quot;1745&quot; &quot;817&quot; &quot;620&quot; &quot;634&quot; &quot;1419&quot; &quot;737&quot; &quot;706&quot; &quot;740&quot; &quot;705&quot; &quot;557&quot; &quot;703&quot; &quot;1717&quot; &quot;1465&quot; &quot;691&quot; &quot;744&quot; &quot;882&quot; &quot;625&quot; &quot;120&quot; &quot;600&quot; &quot;734&quot;</Array>
+      </SimpleSetPredicate>
+      <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+       <Array n="15" type="string">&quot;41&quot; &quot;42&quot; &quot;37&quot; &quot;39&quot; &quot;28&quot; &quot;21&quot; &quot;27&quot; &quot;34&quot; &quot;40&quot; &quot;26&quot; &quot;1&quot; &quot;12&quot; &quot;6&quot; &quot;33&quot; &quot;19&quot;</Array>
+      </SimpleSetPredicate>
+     </CompoundPredicate>
+     <ScoreDistribution value="0" recordCount="250" confidence="0.663129973474801"/>
+     <ScoreDistribution value="1" recordCount="127" confidence="0.336870026525199"/>
+     <Node id="8" score="0" recordCount="148" defaultChild="16">
+      <CompoundPredicate booleanOperator="surrogate">
+       <SimplePredicate field="Edad" operator="greaterOrEqual" value="73.5"/>
+       <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+        <Array n="1" type="string">&quot;41&quot;</Array>
+       </SimpleSetPredicate>
+       <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+        <Array n="4" type="string">&quot;620&quot; &quot;737&quot; &quot;703&quot; &quot;625&quot;</Array>
+       </SimpleSetPredicate>
+       <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="11584.5"/>
+       <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+        <Array n="1" type="string">&quot;5&quot;</Array>
+       </SimpleSetPredicate>
+      </CompoundPredicate>
+      <ScoreDistribution value="0" recordCount="132" confidence="0.891891891891892"/>
+      <ScoreDistribution value="1" recordCount="16" confidence="0.108108108108108"/>
+      <Node id="16" score="0" recordCount="122">
+       <CompoundPredicate booleanOperator="surrogate">
+        <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="14350"/>
+        <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+         <Array n="2" type="string">&quot;0&quot; &quot;703&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+         <Array n="6" type="string">&quot;41&quot; &quot;42&quot; &quot;37&quot; &quot;34&quot; &quot;40&quot; &quot;26&quot;</Array>
+        </SimpleSetPredicate>
+       </CompoundPredicate>
+       <ScoreDistribution value="0" recordCount="121" confidence="0.991803278688525"/>
+       <ScoreDistribution value="1" recordCount="1" confidence="0.00819672131147541"/>
+      </Node>
+      <Node id="17" score="1" recordCount="26" defaultChild="34">
+       <CompoundPredicate booleanOperator="surrogate">
+        <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="14350"/>
+        <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+         <Array n="6" type="string">&quot;1745&quot; &quot;620&quot; &quot;737&quot; &quot;740&quot; &quot;557&quot; &quot;625&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+         <Array n="3" type="string">&quot;39&quot; &quot;25&quot; &quot;27&quot;</Array>
+        </SimpleSetPredicate>
+       </CompoundPredicate>
+       <ScoreDistribution value="0" recordCount="11" confidence="0.423076923076923"/>
+       <ScoreDistribution value="1" recordCount="15" confidence="0.576923076923077"/>
+       <Node id="34" score="0" recordCount="10">
+        <CompoundPredicate booleanOperator="surrogate">
+         <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+          <Array n="5" type="string">&quot;1745&quot; &quot;620&quot; &quot;737&quot; &quot;740&quot; &quot;625&quot;</Array>
+         </SimpleSetPredicate>
+         <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+          <Array n="2" type="string">&quot;42&quot; &quot;25&quot;</Array>
+         </SimpleSetPredicate>
+         <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="18582.5"/>
+         <SimplePredicate field="Edad" operator="greaterOrEqual" value="82.5"/>
+         <SimpleSetPredicate field="FinalidadProcedimientosCD" booleanOperator="isIn">
+          <Array n="1" type="string">&quot;1&quot;</Array>
+         </SimpleSetPredicate>
+        </CompoundPredicate>
+        <ScoreDistribution value="0" recordCount="10" confidence="1"/>
+        <ScoreDistribution value="1" recordCount="0" confidence="0"/>
+       </Node>
+       <Node id="35" score="1" recordCount="16">
+        <CompoundPredicate booleanOperator="surrogate">
+         <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+          <Array n="2" type="string">&quot;0&quot; &quot;557&quot;</Array>
+         </SimpleSetPredicate>
+         <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+          <Array n="3" type="string">&quot;41&quot; &quot;39&quot; &quot;27&quot;</Array>
+         </SimpleSetPredicate>
+         <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="18582.5"/>
+         <SimplePredicate field="Edad" operator="lessThan" value="82.5"/>
+         <SimpleSetPredicate field="FinalidadProcedimientosCD" booleanOperator="isIn">
+          <Array n="1" type="string">&quot;2&quot;</Array>
+         </SimpleSetPredicate>
+        </CompoundPredicate>
+        <ScoreDistribution value="0" recordCount="1" confidence="0.0625"/>
+        <ScoreDistribution value="1" recordCount="15" confidence="0.9375"/>
+       </Node>
+      </Node>
+     </Node>
+     <Node id="9" score="0" recordCount="229" defaultChild="18">
+      <CompoundPredicate booleanOperator="surrogate">
+       <SimplePredicate field="Edad" operator="lessThan" value="73.5"/>
+       <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+        <Array n="15" type="string">&quot;42&quot; &quot;37&quot; &quot;39&quot; &quot;28&quot; &quot;21&quot; &quot;25&quot; &quot;27&quot; &quot;34&quot; &quot;40&quot; &quot;26&quot; &quot;1&quot; &quot;12&quot; &quot;6&quot; &quot;33&quot; &quot;19&quot;</Array>
+       </SimpleSetPredicate>
+       <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+        <Array n="17" type="string">&quot;0&quot; &quot;1745&quot; &quot;817&quot; &quot;634&quot; &quot;1419&quot; &quot;706&quot; &quot;740&quot; &quot;705&quot; &quot;557&quot; &quot;1717&quot; &quot;1465&quot; &quot;691&quot; &quot;744&quot; &quot;882&quot; &quot;120&quot; &quot;600&quot; &quot;734&quot;</Array>
+       </SimpleSetPredicate>
+       <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="11584.5"/>
+       <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+        <Array n="4" type="string">&quot;2&quot; &quot;3&quot; &quot;1&quot; &quot;8&quot;</Array>
+       </SimpleSetPredicate>
+      </CompoundPredicate>
+      <ScoreDistribution value="0" recordCount="118" confidence="0.51528384279476"/>
+      <ScoreDistribution value="1" recordCount="111" confidence="0.48471615720524"/>
+      <Node id="18" score="0" recordCount="79">
+       <CompoundPredicate booleanOperator="surrogate">
+        <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+         <Array n="11" type="string">&quot;39&quot; &quot;28&quot; &quot;21&quot; &quot;25&quot; &quot;27&quot; &quot;34&quot; &quot;40&quot; &quot;26&quot; &quot;6&quot; &quot;33&quot; &quot;19&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+         <Array n="16" type="string">&quot;1745&quot; &quot;817&quot; &quot;634&quot; &quot;1419&quot; &quot;706&quot; &quot;740&quot; &quot;705&quot; &quot;557&quot; &quot;703&quot; &quot;1465&quot; &quot;691&quot; &quot;744&quot; &quot;882&quot; &quot;120&quot; &quot;600&quot; &quot;734&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+         <Array n="1" type="string">&quot;2&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+         <Array n="2" type="string">&quot;1&quot; &quot;5&quot;</Array>
+        </SimpleSetPredicate>
+        <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="25658"/>
+        <SimplePredicate field="Edad" operator="greaterOrEqual" value="37"/>
+       </CompoundPredicate>
+       <ScoreDistribution value="0" recordCount="73" confidence="0.924050632911392"/>
+       <ScoreDistribution value="1" recordCount="6" confidence="0.0759493670886076"/>
+      </Node>
+      <Node id="19" score="1" recordCount="150" defaultChild="38">
+       <CompoundPredicate booleanOperator="surrogate">
+        <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+         <Array n="5" type="string">&quot;41&quot; &quot;42&quot; &quot;37&quot; &quot;1&quot; &quot;12&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+         <Array n="2" type="string">&quot;0&quot; &quot;1717&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+         <Array n="2" type="string">&quot;0&quot; &quot;3&quot;</Array>
+        </SimpleSetPredicate>
+        <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+         <Array n="3" type="string">&quot;2&quot; &quot;3&quot; &quot;8&quot;</Array>
+        </SimpleSetPredicate>
+        <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="25658"/>
+        <SimplePredicate field="Edad" operator="lessThan" value="37"/>
+       </CompoundPredicate>
+       <ScoreDistribution value="0" recordCount="45" confidence="0.3"/>
+       <ScoreDistribution value="1" recordCount="105" confidence="0.7"/>
+       <Node id="38" score="1" recordCount="79" defaultChild="76">
+        <CompoundPredicate booleanOperator="surrogate">
+         <SimpleSetPredicate field="AmbitosProcedimientoCD" booleanOperator="isIn">
+          <Array n="2" type="string">&quot;0&quot; &quot;2&quot;</Array>
+         </SimpleSetPredicate>
+         <SimplePredicate field="Edad" operator="lessThan" value="11"/>
+         <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="12850"/>
+         <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+          <Array n="2" type="string">&quot;41&quot; &quot;12&quot;</Array>
+         </SimpleSetPredicate>
+         <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+          <Array n="2" type="string">&quot;2&quot; &quot;3&quot;</Array>
+         </SimpleSetPredicate>
+         <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+          <Array n="1" type="string">&quot;3&quot;</Array>
+         </SimpleSetPredicate>
+        </CompoundPredicate>
+        <ScoreDistribution value="0" recordCount="39" confidence="0.493670886075949"/>
+        <ScoreDistribution value="1" recordCount="40" confidence="0.506329113924051"/>
+        <Node id="76" score="0" recordCount="53" defaultChild="152">
+         <CompoundPredicate booleanOperator="surrogate">
+          <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="13383"/>
+          <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;42&quot;</Array>
+          </SimpleSetPredicate>
+          <SimplePredicate field="Edad" operator="greaterOrEqual" value="0.5"/>
+          <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;3&quot;</Array>
+          </SimpleSetPredicate>
+          <SimpleSetPredicate field="FinalidadProcedimientosCD" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;2&quot;</Array>
+          </SimpleSetPredicate>
+          <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;2&quot;</Array>
+          </SimpleSetPredicate>
+         </CompoundPredicate>
+         <ScoreDistribution value="0" recordCount="37" confidence="0.69811320754717"/>
+         <ScoreDistribution value="1" recordCount="16" confidence="0.30188679245283"/>
+         <Node id="152" score="0" recordCount="43">
+          <CompoundPredicate booleanOperator="surrogate">
+           <SimplePredicate field="Edad" operator="lessThan" value="43.5"/>
+           <SimpleSetPredicate field="FinalidadProcedimientosCD" booleanOperator="isIn">
+            <Array n="1" type="string">&quot;2&quot;</Array>
+           </SimpleSetPredicate>
+          </CompoundPredicate>
+          <ScoreDistribution value="0" recordCount="37" confidence="0.86046511627907"/>
+          <ScoreDistribution value="1" recordCount="6" confidence="0.13953488372093"/>
+         </Node>
+         <Node id="153" score="1" recordCount="10">
+          <CompoundPredicate booleanOperator="surrogate">
+           <SimplePredicate field="Edad" operator="greaterOrEqual" value="43.5"/>
+           <SimpleSetPredicate field="FinalidadProcedimientosCD" booleanOperator="isIn">
+            <Array n="1" type="string">&quot;1&quot;</Array>
+           </SimpleSetPredicate>
+          </CompoundPredicate>
+          <ScoreDistribution value="0" recordCount="0" confidence="0"/>
+          <ScoreDistribution value="1" recordCount="10" confidence="1"/>
+         </Node>
+        </Node>
+        <Node id="77" score="1" recordCount="26">
+         <CompoundPredicate booleanOperator="surrogate">
+          <SimplePredicate field="CostoProcedimiento" operator="greaterOrEqual" value="13383"/>
+          <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+           <Array n="2" type="string">&quot;41&quot; &quot;12&quot;</Array>
+          </SimpleSetPredicate>
+          <SimplePredicate field="Edad" operator="lessThan" value="0.5"/>
+          <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;0&quot;</Array>
+          </SimpleSetPredicate>
+          <SimpleSetPredicate field="FinalidadProcedimientosCD" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;1&quot;</Array>
+          </SimpleSetPredicate>
+          <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+           <Array n="1" type="string">&quot;3&quot;</Array>
+          </SimpleSetPredicate>
+         </CompoundPredicate>
+         <ScoreDistribution value="0" recordCount="2" confidence="0.0769230769230769"/>
+         <ScoreDistribution value="1" recordCount="24" confidence="0.923076923076923"/>
+        </Node>
+       </Node>
+       <Node id="39" score="1" recordCount="71">
+        <CompoundPredicate booleanOperator="surrogate">
+         <SimpleSetPredicate field="AmbitosProcedimientoCD" booleanOperator="isIn">
+          <Array n="1" type="string">&quot;1&quot;</Array>
+         </SimpleSetPredicate>
+         <SimplePredicate field="Edad" operator="greaterOrEqual" value="11"/>
+         <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="12850"/>
+         <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+          <Array n="3" type="string">&quot;42&quot; &quot;37&quot; &quot;1&quot;</Array>
+         </SimpleSetPredicate>
+         <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+          <Array n="1" type="string">&quot;8&quot;</Array>
+         </SimpleSetPredicate>
+         <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+          <Array n="1" type="string">&quot;0&quot;</Array>
+         </SimpleSetPredicate>
+        </CompoundPredicate>
+        <ScoreDistribution value="0" recordCount="6" confidence="0.0845070422535211"/>
+        <ScoreDistribution value="1" recordCount="65" confidence="0.915492957746479"/>
+       </Node>
+      </Node>
+     </Node>
+    </Node>
+    <Node id="5" score="1" recordCount="63">
+     <CompoundPredicate booleanOperator="surrogate">
+      <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+       <Array n="14" type="string">&quot;696&quot; &quot;438&quot; &quot;526&quot; &quot;1870&quot; &quot;674&quot; &quot;761&quot; &quot;1491&quot; &quot;1002&quot; &quot;1591&quot; &quot;677&quot; &quot;816&quot; &quot;679&quot; &quot;1729&quot; &quot;1436&quot;</Array>
+      </SimpleSetPredicate>
+      <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+       <Array n="1" type="string">&quot;25&quot;</Array>
+      </SimpleSetPredicate>
+     </CompoundPredicate>
+     <ScoreDistribution value="0" recordCount="1" confidence="0.0158730158730159"/>
+     <ScoreDistribution value="1" recordCount="62" confidence="0.984126984126984"/>
+    </Node>
+   </Node>
+   <Node id="3" score="1" recordCount="270">
+    <CompoundPredicate booleanOperator="surrogate">
+     <SimpleSetPredicate field="Codigo" booleanOperator="isIn">
+      <Array n="6" type="string">&quot;43&quot; &quot;3&quot; &quot;31&quot; &quot;24&quot; &quot;15&quot; &quot;11&quot;</Array>
+     </SimpleSetPredicate>
+     <SimpleSetPredicate field="TipoUsuarioCD" booleanOperator="isIn">
+      <Array n="2" type="string">&quot;3&quot; &quot;1&quot;</Array>
+     </SimpleSetPredicate>
+     <SimpleSetPredicate field="RegimenAdministradoraDesc" booleanOperator="isIn">
+      <Array n="2" type="string">&quot;0&quot; &quot;2&quot;</Array>
+     </SimpleSetPredicate>
+     <SimplePredicate field="CostoProcedimiento" operator="lessThan" value="10524.5"/>
+     <SimplePredicate field="Edad" operator="greaterOrEqual" value="80.5"/>
+     <SimpleSetPredicate field="DxPrincipal" booleanOperator="isIn">
+      <Array n="2" type="string">&quot;608&quot; &quot;1417&quot;</Array>
+     </SimpleSetPredicate>
+    </CompoundPredicate>
+    <ScoreDistribution value="0" recordCount="22" confidence="0.0814814814814815"/>
+    <ScoreDistribution value="1" recordCount="248" confidence="0.918518518518519"/>
+   </Node>
+  </Node>
+ </TreeModel>
+</PMML>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><feature_model PingoModel="prueba"><meta><data name="description">a description</data><data name="creator">pingoz</data><data name="address">udea</data><data name="email">jose.garciag@udea.edu.co</data><data name="phone">3053573300</data><data name="website">a website</data><data name="organization">a organization</data><data name="date">a date</data><data name="reference">a reference</data></meta><feature_tree>:r DecisionTree(_r)
+	:m sepal_length(_r_0)
+	:m sepal_width(_r_1)
+	:m petal_length(_r_2)
+	:m petal_width(_r_3)
+	:m class(_r_4)</feature_tree></feature_model>
