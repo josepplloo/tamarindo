@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-public class ReadXML {
+public class ReadPMMLtoSXFM {
 
 	static String XSFMPath = "/Users/josepplloo/workspace/tamarindo/src/main/resources/xsfm/";
 	static String nombre_archivo = "PingoModel";
