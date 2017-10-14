@@ -26,8 +26,9 @@ import org.xml.sax.SAXException;
 
 public class ReadPMMLtoSXFM {
 
-	static String XSFMPath = "/Users/josepplloo/workspace/tamarindo/src/main/resources/xsfm/";
-	static String nombre_archivo = "PingoModel";
+	//static String XSFMPath = "/Users/josepplloo/Documents/tamarindu/tamarindo/src/main/resources/xsfm/";
+	static String XSFMPath = "/Users/josepplloo/git/web/src/main/webapp/fms/";
+	static String nombre_archivo = "RIPSModel";
 	static ArrayList<String> key;
 	static ArrayList<String> value;
 	static String nombre_modelo = "";
@@ -254,7 +255,7 @@ public class ReadPMMLtoSXFM {
 
 			// Main Node
 			Element raiz = document.getDocumentElement();
-			raiz.setAttribute("name", "PingoModel");
+			raiz.setAttribute("name", "RIPSModel");
 
 			// Por cada key creamos un item que contendra la key y el value
 			Element itemNode = document.createElement("meta");
