@@ -2,6 +2,8 @@ package com;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -26,8 +28,8 @@ import org.xml.sax.SAXException;
 
 public class ReadPMMLtoSXFM {
 
-	//static String XSFMPath = "/Users/josepplloo/Documents/tamarindu/tamarindo/src/main/resources/xsfm/";
-	static String XSFMPath = "/Users/josepplloo/git/web/src/main/webapp/fms/";
+	static Path pathy = FileSystems.getDefault().getPath(".");
+	static String XSFMPath = pathy.toString()+ "xsfm";
 	static String nombre_archivo = "RIPSModel";
 	static ArrayList<String> key;
 	static ArrayList<String> value;
