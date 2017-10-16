@@ -1,8 +1,7 @@
 package org;
 
 
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+
 
 /*
  * Generative Software Development Lab (http://gsd.uwaterloo.ca/)
@@ -32,16 +31,16 @@ import fm.XMLFeatureModel;
 public class XMLFeatureModelParserSample {
 
 	public static void main(String args[]) {
-		new XMLFeatureModelParserSample().parse();
+		
+		new XMLFeatureModelParserSample().parse(args[0].trim());
 	} 
 	
-	public void parse() {
+	public void parse(String fm) {
 		
 		try {
 			
-			Path path = FileSystems.getDefault().getPath(".");
-
-			String featureModelFile = path.toString()+"/resouces/xsfm/RIPSModel.xml";
+			String featureModelFile = fm;
+			//String featureModelFile = "/Users/josepplloo/Documents/tamarindu/tamarindo/src/main/resources/xsfm/PingoModel.xml";
 			
 			/* Creates the Feature Model Object
 			 * ********************************

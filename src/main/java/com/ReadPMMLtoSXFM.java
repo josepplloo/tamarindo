@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.XMLFeatureModelParserSample;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -26,10 +27,11 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
+
 public class ReadPMMLtoSXFM {
 
-	static Path pathy = FileSystems.getDefault().getPath(".");
-	static String XSFMPath = pathy.toString()+ "xsfm";
+	static Path pathy = FileSystems.getDefault().getPath("");
+	static String XSFMPath = pathy.toAbsolutePath().toString()+ "/src/main/resources/xsfm/";
 	static String nombre_archivo = "RIPSModel";
 	static ArrayList<String> key;
 	static ArrayList<String> value;
@@ -49,9 +51,11 @@ public class ReadPMMLtoSXFM {
 		factory.setNamespaceAware(false);
 		// obtenemos el constructor del elemento parser
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		// obtenemos el archivo XML
+		// obtenemos el archivo XML quye se recibe como argumento
 		Document document = builder.parse(new File(args[0]));
 
+		String[] nombre_archivo_ruta = document.getBaseURI().split(FileSystems.getDefault().getSeparator());
+		String nombre_archivo_usar =nombre_archivo_ruta[nombre_archivo_ruta.length-1];
 		key = new ArrayList<String>();
 		value = new ArrayList<String>();
 		key.add("description");
@@ -77,7 +81,7 @@ public class ReadPMMLtoSXFM {
 		// ///////////////////////// aca inici con el armado
 
 		try {
-			generate(nombre_archivo, key, value);
+			generate(nombre_archivo_usar, key, value);
 		} catch (Exception e) {
 		}
 
@@ -285,17 +289,22 @@ public class ReadPMMLtoSXFM {
 
 			itemNode2.setTextContent(featuretree);
 			raiz.appendChild(itemNode2);
-			Element itemNode3 = document.createElement("constraints");
-			itemNode3.setTextContent("constrait_1:_r_0 or _r_1");
-			raiz.appendChild(itemNode3);
+			Element itemNode3 = document.createElement("constraints"); //crear los demas elementos del modelo de caracteristicas
+			//itemNode3.setTextContent("constrait_1:_r_0 or _r_1");
+		    raiz.appendChild(itemNode3);
 			// Generate XML
 			Source source = new DOMSource(document);
 			// Indicamos donde lo queremos almacenar
 			Result result = new StreamResult(new java.io.File(XSFMPath + name
-					+ ".xml")); // nombre del archivo
+					+ ".xsfm")); // nombre del archivo
+			System.out.println("se crea el archivo " +XSFMPath + name
+					+ ".xsfm" );
 			Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
 			transformer.transform(source, result);
+			String args[] = {XSFMPath + name
+					+ ".xsfm"};
+			XMLFeatureModelParserSample.main(args);
 		}
 	}
 
