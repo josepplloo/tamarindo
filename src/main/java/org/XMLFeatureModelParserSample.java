@@ -40,7 +40,6 @@ public class XMLFeatureModelParserSample {
 		try {
 			
 			String featureModelFile = fm;
-			//String featureModelFile = "/Users/josepplloo/Documents/tamarindu/tamarindo/src/main/resources/xsfm/PingoModel.xml";
 			
 			/* Creates the Feature Model Object
 			 * ********************************

@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
 public class ReadPMMLtoSXFM {
 
 	static Path pathy = FileSystems.getDefault().getPath("");
-	static String XSFMPath = pathy.toAbsolutePath().toString()+ "/src/main/resources/xsfm/";
+	static String SXFMPath = pathy.toAbsolutePath().toString()+ "/src/main/resources/sxfm/";
 	static String nombre_archivo = "RIPSModel";
 	static ArrayList<String> key;
 	static ArrayList<String> value;
@@ -295,15 +295,15 @@ public class ReadPMMLtoSXFM {
 			// Generate XML
 			Source source = new DOMSource(document);
 			// Indicamos donde lo queremos almacenar
-			Result result = new StreamResult(new java.io.File(XSFMPath + name
-					+ ".xsfm")); // nombre del archivo
-			System.out.println("se crea el archivo " +XSFMPath + name
-					+ ".xsfm" );
+			Result result = new StreamResult(new java.io.File(SXFMPath + name
+					+ ".sxfm")); // nombre del archivo
+			System.out.println("se crea el archivo " +SXFMPath + name
+					+ ".sxfm" );
 			Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
 			transformer.transform(source, result);
-			String args[] = {XSFMPath + name
-					+ ".xsfm"};
+			String args[] = {SXFMPath + name
+					+ ".sxfm"};
 			XMLFeatureModelParserSample.main(args);
 		}
 	}
