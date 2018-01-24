@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,7 +14,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.XMLFeatureModelParserSample;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
@@ -26,22 +24,57 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 
 
 public class ReadPMMLtoSXFM {
 
-	static Path pathy = FileSystems.getDefault().getPath("");
-	static String SXFMPath = pathy.toAbsolutePath().toString()+ "/src/main/resources/sxfm/";
-	static String nombre_archivo = "RIPSModel";
-	static ArrayList<String> key;
-	static ArrayList<String> value;
-	static String nombre_modelo = "";
-	static ArrayList<String> restricciones_modelo = new ArrayList<String>();
+	
+	static Logger LOGGER = LogManager.getLogger(ReadPMMLtoSXFM.class.getName());
+
+	static final Path HOME_PATH = FileSystems.getDefault().getPath("");
+	static final String SXFMPATH = HOME_PATH.toAbsolutePath().toString()+ "/src/main/resources/sxfm/";
+	static final String FILE_NAME_STRING = "SXFMModel.sxfm";
+	
+		
+	static String featureModelName = "featureModelName";
+	static ArrayList<String> sxfmModelContent = new ArrayList<String>();
 	static int cont = 0;
 	static boolean bandera = false;
 
+	private ReadPMMLtoSXFM() {
+		// No-op; won't be called
+		}
+
 	public static void main(String[] args) throws SAXException, IOException,
 			ParserConfigurationException {
+
+				LOGGER.printf(Level.INFO,"Hi, I am " + ReadPMMLtoSXFM.class.getName());
+
+				ArrayList<String> KEYHASH = new ArrayList<String>();
+					KEYHASH.add("description");
+					KEYHASH.add("creator");
+					KEYHASH.add("address");
+					KEYHASH.add("email");
+					KEYHASH.add("phone");
+					KEYHASH.add("website");
+					KEYHASH.add("organization");
+					KEYHASH.add("date");
+					KEYHASH.add("reference");
+					
+			 ArrayList<String> VALUEHASH = new ArrayList<String>();
+						VALUEHASH.add("a description");
+						VALUEHASH.add("pingoz");
+						VALUEHASH.add("home");
+						VALUEHASH.add("josepplloo@gmail.com");
+						VALUEHASH.add("3053573300");
+						VALUEHASH.add("https://github.com/josepplloo/tamarindo");
+						VALUEHASH.add("a organization");
+						VALUEHASH.add("a date");
+						VALUEHASH.add("a reference");
+					
 
 		// hacemos una fabrica de objetos parser
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -54,35 +87,14 @@ public class ReadPMMLtoSXFM {
 		// obtenemos el archivo XML quye se recibe como argumento
 		Document document = builder.parse(new File(args[0]));
 
-		String[] nombre_archivo_ruta = document.getBaseURI().split(FileSystems.getDefault().getSeparator());
-		String nombre_archivo_usar =nombre_archivo_ruta[nombre_archivo_ruta.length-1];
-		key = new ArrayList<String>();
-		value = new ArrayList<String>();
-		key.add("description");
-		value.add("a description");
+		String[] fileNamePath = document.getBaseURI().split(FileSystems.getDefault().getSeparator());
+		String nameFileToUse =fileNamePath[fileNamePath.length-1];
+		
 		searchNode(document);
-		key.add("creator");
-		value.add("pingoz");
-		key.add("address");
-		value.add("udea");
-		key.add("email");
-		value.add("jose.garciag@udea.edu.co");
-		key.add("phone");
-		value.add("3053573300");
-		key.add("website");
-		value.add("a website");
-		key.add("organization");
-		value.add("a organization");
-		key.add("date");
-		value.add("a date");
-		key.add("reference");
-		value.add("a reference");
-
-		// ///////////////////////// aca inici con el armado
-
 		try {
-			generate(nombre_archivo_usar, key, value);
-		} catch (Exception e) {
+			generate(nameFileToUse, KEYHASH, VALUEHASH);
+		} catch (Exception e){
+			LOGGER.printf(Level.ERROR,"File exception or error generating the file "+ e);
 		}
 
 	}
@@ -90,7 +102,7 @@ public class ReadPMMLtoSXFM {
 	public static void searchNode(Node node) {
 
 		if (node == null) {
-			System.out.println("::nothing to do, node is null::");
+			LOGGER.printf(Level.INFO,"::nothing to do, node is null::");
 			return;
 		}
 
@@ -98,48 +110,48 @@ public class ReadPMMLtoSXFM {
 
 		switch (type) {
 		case Node.DOCUMENT_NODE: {
-			System.out.println("<?xml version=\"1.0\"?>");
+			LOGGER.printf(Level.INFO,"<?xml version=\"1.0\"?>");
 			searchNode(((Document) node).getDocumentElement());
 			break;
 		}// se supone que este es para la raiz DOCUMENT_NODE
 
 		case Node.ELEMENT_NODE: {
-			System.out.println("<");
-			System.out.println(node.getNodeName());
+			LOGGER.printf(Level.INFO,"<");
+			LOGGER.printf(Level.INFO,node.getNodeName());
 
 			// atributos
 			Attr VAttrib[] = getAttrArray(node.getAttributes());
 			int item = 0;
 			if (node.getNodeName().trim().equalsIgnoreCase("DataField")) {
 				bandera = true;
-				restricciones_modelo.add("\n\t:m " + VAttrib[1].getNodeValue()
+				sxfmModelContent.add("\n\t:m " + VAttrib[1].getNodeValue()
 						+ "(_r_" + cont + ")");
 				cont++;
 				
 			}
 			if (node.getNodeName().trim().equalsIgnoreCase("Value")) {
 				if (bandera == true) {
-					restricciones_modelo.add("\n\t\t:g (_r_" + (cont - 1) + "_"
+					sxfmModelContent.add("\n\t\t:g (_r_" + (cont - 1) + "_"
 							+ cont + ")[1,1]");
 					bandera = false;
 					item = cont;
 					cont++;
 				}
 				
-				restricciones_modelo.add("\n\t\t\t: "
+				sxfmModelContent.add("\n\t\t\t: "
 						+ VAttrib[0].getNodeValue()+"(_r_" + (item - 1) + "_"
 								+ item +"_"+(cont++)+ ")");
 			}
 			if (node.getNodeName().trim().equalsIgnoreCase("TreeModel"))
-				nombre_modelo = VAttrib[2].getNodeValue();
+				featureModelName = VAttrib[2].getNodeValue();
 			for (int i = 0; i < VAttrib.length; i++) {
 				Attr attrib = VAttrib[i];
 
-				System.out.println(" " + attrib.getNodeName() + "=\"");
-				System.out.println(strToXML(attrib.getNodeValue()) + "\"");
+				LOGGER.printf(Level.INFO," " + attrib.getNodeName() + "=\"");
+				LOGGER.printf(Level.INFO,strToXML(attrib.getNodeValue()) + "\"");
 
 			}
-			System.out.println(">");
+			LOGGER.printf(Level.INFO,">");
 			// esto es para los hijos de los hijos
 
 			NodeList childrens = node.getChildNodes();
@@ -155,9 +167,9 @@ public class ReadPMMLtoSXFM {
 
 		case Node.ENTITY_REFERENCE_NODE: {
 
-			System.out.println('&');
-			System.out.println(node.getNodeName());
-			System.out.println(';');
+			LOGGER.printf(Level.INFO,"&");
+			LOGGER.printf(Level.INFO,node.getNodeName());
+			LOGGER.printf(Level.INFO,";");
 			break;
 		}// para las referencias
 
@@ -165,20 +177,20 @@ public class ReadPMMLtoSXFM {
 		case Node.TEXT_NODE: {
 			// Eliminate <,>,& and quotation marks and
 			// write to output file.
-			System.out.println(strToXML(node.getNodeValue()));
+			LOGGER.printf(Level.INFO,strToXML(node.getNodeValue()));
 			break;
 		}// end case Node.TEXT_NODE
 
 		// Handle processing instruction
 		case Node.PROCESSING_INSTRUCTION_NODE: {
-			System.out.println("<?");
-			System.out.println(node.getNodeName());
+			LOGGER.printf(Level.INFO,"<?");
+			LOGGER.printf(Level.INFO,node.getNodeName());
 			String data = node.getNodeValue();
 			if (data != null && data.length() > 0) {
-				System.out.println(' ');// write space
-				System.out.println(data);
+				LOGGER.printf(Level.INFO," ");// write space
+				LOGGER.printf(Level.INFO,data);
 			}// end if
-			System.out.println("?>");
+			LOGGER.printf(Level.INFO,"?>");
 			break;
 		}// end Node.PROCESSING_INSTRUCTION_NODE
 
@@ -187,7 +199,7 @@ public class ReadPMMLtoSXFM {
 		}// fin del case
 
 		if (type == Node.ELEMENT_NODE) {
-			System.out.println("</" + node.getNodeName() + ">");
+			LOGGER.printf(Level.INFO,"</" + node.getNodeName() + ">");
 		}// end if
 
 	}
@@ -247,7 +259,7 @@ public class ReadPMMLtoSXFM {
 			ArrayList<String> value) throws Exception {
 
 		if (key.isEmpty() || value.isEmpty() || key.size() != value.size()) {
-			System.out.println("ERROR empty ArrayList");
+			LOGGER.error("ERROR empty ArrayList");
 			return;
 		} else {
 
@@ -261,7 +273,7 @@ public class ReadPMMLtoSXFM {
 
 			// Main Node
 			Element raiz = document.getDocumentElement();
-			raiz.setAttribute("name", "RIPSModel");
+			raiz.setAttribute("name", name);
 
 			// Por cada key creamos un item que contendra la key y el value
 			Element itemNode = document.createElement("meta");
@@ -280,10 +292,10 @@ public class ReadPMMLtoSXFM {
 											// "Documento"
 			}
 			Element itemNode2 = document.createElement("feature_tree");
-			String featuretree = ":r " + nombre_modelo + "(_r)";
+			String featuretree = ":r " + featureModelName + "(_r)";
 
-			for (int i = 0; i < restricciones_modelo.size(); i++) {
-				featuretree += restricciones_modelo.get(i);
+			for (int i = 0; i < sxfmModelContent.size(); i++) {
+				featuretree += sxfmModelContent.get(i);
 
 			}
 
@@ -295,15 +307,12 @@ public class ReadPMMLtoSXFM {
 			// Generate XML
 			Source source = new DOMSource(document);
 			// Indicamos donde lo queremos almacenar
-			Result result = new StreamResult(new java.io.File(SXFMPath + name
-					+ ".sxfm")); // nombre del archivo
-			System.out.println("se crea el archivo " +SXFMPath + name
-					+ ".sxfm" );
+			Result result = new StreamResult(new java.io.File(SXFMPATH + name));
+			LOGGER.printf(Level.INFO,"Creating file " +SXFMPATH + name);
 			Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
 			transformer.transform(source, result);
-			String args[] = {SXFMPath + name
-					+ ".sxfm"};
+			String args[] = {SXFMPATH + name};
 			XMLFeatureModelParserSample.main(args);
 		}
 	}

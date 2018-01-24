@@ -14,15 +14,14 @@ import org.xml.sax.SAXException;
 
 public class CreateXSFMTest {
 	static Path pathy = FileSystems.getDefault().getPath("");
-	static String PMMLPath = pathy.toAbsolutePath().toString()+ "/src/main/resources/pmml/";
-	static String XSFMLPath = pathy.toAbsolutePath().toString()+ "/src/main/resources/sxfm/";
-
+	static final String PMMLPATH = pathy.toAbsolutePath().toString()+ "/src/main/resources/pmml/";
+	static final String XSFMLPATH = pathy.toAbsolutePath().toString()+ "/src/main/resources/sxfm/";
+    static final String EVALFILE = "single_iris_dectree.xml";
 	@Test
 	public void testToCreateTheFile() throws SAXException, IOException, ParserConfigurationException {
-		String args[] = {PMMLPath+"single_iris_dectree.xml"};
+		String args[] = {PMMLPATH+EVALFILE};
 		ReadPMMLtoSXFM.main(args);
-		File f = new File(XSFMLPath+"single_iris_dectree.xml.sxfm");
-		System.out.println(XSFMLPath+"single_iris_dectree.xml.sxfm");
+		File f = new File(XSFMLPATH+EVALFILE);
 		assertTrue(f.exists());
 	}
 
