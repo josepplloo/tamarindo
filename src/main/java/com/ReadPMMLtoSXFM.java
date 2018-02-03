@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -37,6 +38,8 @@ public class ReadPMMLtoSXFM {
 	static final Path HOME_PATH = FileSystems.getDefault().getPath("");
 	static final String SXFMPATH = HOME_PATH.toAbsolutePath().toString()+ "/src/main/resources/sxfm/";
 	static final String FILE_NAME_STRING = "SXFMModel.sxfm";
+
+	static String strGroup = null;
 	
 		
 	static String featureModelName = "featureModelName";
@@ -121,26 +124,24 @@ public class ReadPMMLtoSXFM {
 
 			// atributos
 			Attr VAttrib[] = getAttrArray(node.getAttributes());
-			int item = 0;
 			if (node.getNodeName().trim().equalsIgnoreCase("DataField")) {
 				bandera = true;
 				sxfmModelContent.add("\n\t:m " + VAttrib[1].getNodeValue()
-						+ "(_r_" + cont + ")");
-				cont++;
+						+ "(_r_" + (++cont) + ")");
+				
 				
 			}
 			if (node.getNodeName().trim().equalsIgnoreCase("Value")) {
 				if (bandera == true) {
-					sxfmModelContent.add("\n\t\t:g (_r_" + (cont - 1) + "_"
-							+ cont + ")[1,1]");
+					sxfmModelContent.add("\n\t\t:g (_r_" + (cont) + "_"
+							+ (cont+1) + ")[1,1]");
 					bandera = false;
-					item = cont;
+					strGroup ="(_r_" + (cont) +"_"+(cont+1);
 					cont++;
 				}
 				
 				sxfmModelContent.add("\n\t\t\t: "
-						+ VAttrib[0].getNodeValue()+"(_r_" + (item - 1) + "_"
-								+ item +"_"+(cont++)+ ")");
+						+ VAttrib[0].getNodeValue()+strGroup+"_"+(++cont)+ ")");
 			}
 			if (node.getNodeName().trim().equalsIgnoreCase("TreeModel"))
 				featureModelName = VAttrib[2].getNodeValue();
@@ -292,12 +293,13 @@ public class ReadPMMLtoSXFM {
 											// "Documento"
 			}
 			Element itemNode2 = document.createElement("feature_tree");
-			String featuretree = ":r " + featureModelName + "(_r)";
+			String featuretree = "\n:r " + featureModelName + "(_r)";
 
 			for (int i = 0; i < sxfmModelContent.size(); i++) {
 				featuretree += sxfmModelContent.get(i);
 
 			}
+			featuretree +="\n";
 
 			itemNode2.setTextContent(featuretree);
 			raiz.appendChild(itemNode2);
@@ -311,6 +313,8 @@ public class ReadPMMLtoSXFM {
 			LOGGER.printf(Level.INFO,"Creating file " +SXFMPATH + name);
 			Transformer transformer = TransformerFactory.newInstance()
 					.newTransformer();
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.transform(source, result);
 			String args[] = {SXFMPATH + name};
 			XMLFeatureModelParserSample.main(args);
